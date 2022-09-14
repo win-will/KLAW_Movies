@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/1c840a480d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>KLAW @Movies</title> 
+</head>
+<body>
+    <div id="app">
+        <section class="hero is-info is-halfheight-with-navbar block m-0" id="topBar">
+            <div class="hero-head">
+                <nav class="navbar-card">
+                    <div class="container.hero">
+
+                        <div class="navbar-brand navbar-start is-active mt-2">
+                            <div class="tile is-justify-content-center">
+                                <img src="./assets/images/KLAW_logo-1.png" id="klawLogo" alt="pawprint klaw movie logo">
+                                <!-- <p id="textLogo">KLAW Movies</p> -->
+                            </div>
+                            <a role="button" class="navbar-burger" data-target="navbarMenuHeroB" aria-label="menu" aria-expanded="false">
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                            </a>
+                        </div>
+
+                        <div id="navbarMenuHeroB" class="navbar-menu navbar-end">
+                            <div class="navbar-start">
+                                <a class="navbar-item" id="homeBtn">Home</a>
+                                <a class="navbar-item" id="personalizeBtn">Favorites</a>
+                                <a class="navbar-item" id="top20Btn">Top 20</a>
+                                <a class="navbar-item" id="triviaBtn">Games</a>
+                            </div>
+
+                            <div class="navbar-end">
+                                <a class="navbar-item" id="siteMapBtn">Site Map</a>
+                                <a class="navbar-item" id="aboutBtn">About</a>
+                                <a class="navbar-item" href="https://github.com/Laurencvengros/KLAW_Movies">GitHub</a>
+                            </div>            
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+      <section>
+
+          <div class="modal" id="modal2">
+            <div class="modal-background tile is-flex-direction-column is-align-items-center">
+              
+              
+              <div class="box mr-auto ml-auto mt-20" id="siteMapBox">
+                <div class="container is-flexbox is-align-items-right">
+                  <button class="button mt-2" aria-label="close modal" data-close>X</button>
+                </div>
+                  <div class="box has-text-centered">
+                      <span class="is-size-1">Site Map</span>
+                  </div>
+                    <ul class="box">
+                        <li><span class="has-text-weight-semibold">Home</span> - <span class="is-italic">This is the main page of the application.</span></li>
+                        <li><span class="has-text-weight-semibold">Favorites</span> - <span class="is-italic">Using the Add Favorite, movies saved to this page.</span></li>
+                        <li><span class="has-text-weight-semibold">Top 20</span> - <span class="is-italic">View the top 20 movies selected by the staff at KLAW.</span></li>
+                        <li><span class="has-text-weight-semibold">Games</span> - <span class="is-italic">Play a trivia, matching, or movie title guessing game here.</span></li>
+                        <li><span class="has-text-weight-semibold">Site Map</span> - <span>Breaks out the site into different parts.</span></li>
+                        <li><span class="has-text-weight-semibold">About</span> - <span class="is-italic">Provides background information on the staff at KLAW.</span></li>
+                        <li><span class="has-text-weight-semibold">GitHub</span> - <span class="is-italic">Launches GitHub page for the app.</span></li>
+                    </ul>
+                    
+              </div>
+              
+              
+            </div>
+          </div>
+
+          <div class="modal" id="modal1">
+              <div class="modal-card"> 
+                <header class="modal-card-head">
+                    <button class="modal-close" aria-label="close modal" data-close></button>
+                    <p class="modal-card-title is-size-2" id="movieTitle"></p>
+                    <br>
+                    <p class="modal-card-title is-size-3" id="releaseYear"></p>
+                    <br>
+                    <!-- <button class="delete" aria-label="close" data-close></button> -->
+                    <button id="favBtn">Add To Favorites</button>
+                    <p class="added" id="addedFav" style="display:none;color: green;font-size:larger;font-weight: 500;">Added To Favorites<i class="fa-solid fa-check"></i></p>
+                </header>
+                <section class="modal-card-body">
+                        <div><img src="./assets/images/loading.gif" id="moviePoster" attr="Movie Title"></div>
+                        <div id="ratingEl"></div>
+                        <div id="moviePlot"></div>
+                </section>
+                <footer class="modal-footer">
+                    <button class="button" aria-label="close modal" data-close>Close</button>
+                </footer>
+              </div>
+          </div>
+      </section>
+
+      <section id="searchBar">
+        <div class="title notification $grey-light mt-3 ml-3 mr-3 mb-3" id="homeMiddle">
+          <div class="columns">
+              <div class="column m-0 p-0">
+                  <div class="control is-grouped">
+                      <div class="tile is-justify-content-right m-0 p-0">
+                          <input type="text" class="input" id="searchmovies" placeholder="Movie Title">
+                          <a class="button is-info open-modal" id="searchBtn" data-open="modal1">Search</a>                         
+                      </div>
+                      
+                      <div class="control tile is-justify-content-right m-0 p-0">
+                          <label class="radio">
+                              <input type="radio" name="answer" id="imdbSearch" checked="checked" aria-checked="true">
+                              IMDB
+                          </label>
+                          <label class="radio">
+                              <input type="radio" name="answer" id="omdbSearch">
+                              OMDB
+                          </label>
+                          <label class="radio">
+                              <input type="radio" name="answer" id="tmdbSearch">
+                              TMDB
+                          </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="column m-0 p-0 is-narrow">
+                  <div class="control tile is-justify-content-left ml-2 mt-0 mr-0 mb-0  p-0">
+                      <!-- <label>Recent Searches:</label> -->
+                      <div class="select is-small">
+                          <select id="selectVal">
+                              <option>Recent Searches</option>
+                          </select>
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+      </section>
+        
+        <section id="homeSec">
+            <div class="container-poster notification $grey-light p-1 mt-0 ml-3 mr-3 mb-3" id="homeMiddleMovies">
+                
+                <div class="tile is-justify-content-center">
+                    <div class="columns is-vcentered">
+                        <div class="column poster" id="posterColumn"> 
+                            <img class = "display-poster" id="poster1" src="./assets/images/spirited_away_poster.jpg" alt="spirited away poster" data-open="modal1">
+                            <img class = "display-poster" id="poster2" src="./assets/images/independence_day_poster.jpg" alt="Independence Day poster" data-open="modal1">
+                            <img class = "display-poster" id="poster3" src="./assets/images/insidious_poster.jpg" alt="Insideous poster" data-open="modal1">
+                            <img class = "display-poster" id="poster4" src="./assets/images/the_devil_wears_prada.jpg" alt="The Devil Wears Prada" data-open="modal1">
+                            <img class = "display-poster" id="poster5" src="./assets/images/the_english_patient.jpg" alt="The English Patient" data-open="modal1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section id="aboutSec">     
+          <div class="container">
+              <div class="notification is-light">
+                  <div class="columns is-vcentered">
+                      <div class="column aboutSec-kelsie is-half">
+                          <img src="./assets/images/kelsieszost.png" height="500" width="350" alt="image of kelsie szost">
+                      </div>
+                      <div class="column kelsie-paragraph">
+                          <p class="subtitle is-centered">
+                              Kelsie Szost is a digital marketer, web designer, and developer. Kelsie loves art, traveling and technology. In her free time she enjoys traveling over seas, as well as spending time with her family. She is currently working to become a full-stack developer.
+                          </p>
+                      </div>
+                  </div> 
+              </div>
+          </div>
+      
+          <div class="container">
+              <div class="notification is-white">
+                  <div class="columns is-vcentered">
+                      <div class="column person-description is-half is-centered">
+                          <p class="subtitle is-centered">
+                              My name is Andrew Vazquez, and I'm a web-developer. I enjoy building things with the skills that I have developed during my web development journey. When I'm not coding, I enjoy hiking, travelling, and spending time with my dog Maui. Hope you enjoy our KLAW Movies website!
+                          </p>
+                      </div>
+                      <div class="column pl-6">
+                          <img class="placeholder" src="./assets/images/andrew.jpg" height="500" width="350" alt="">
+                      </div>
+                  </div> 
+              </div>
+          </div>
+      
+          <div class="container">
+              <div class="notification is-light">
+                  <div class="columns is-vcentered">
+                      <div class="column aboutSec-kelsie is-half ">
+                          <img src="./assets/images/lauren.jpg" height="300" width="500" alt="image of kelsie szost">
+                      </div>
+                      <div class="column kelsie-paragraph">
+                          <p class="subtitle is-cenetered">
+                              My name is Lauren, I am 25 years old currently living in Grand Rapids Michigan, but grew up in Traverse City Michigan. I have a degree in environmental science from Michigan State University but my work background is in customer service/sales, I spend the first 2.5 years after college traveling as a flight attendant before getting into sales.  I was drawn to a career in web development because I live the balance between critical thinking and creativity learning to code brings and i’m excited about the possibilities this career path opens. When i’m not studying code you’ll find me either at the gym, enjoying some time outside, hiking in the summer and snowboarding in the winter or curled up with a good horror book.
+                          </p>
+                      </div>
+                  </div> 
+              </div>
+          </div>
+          <div class="container">
+            <div class="notification is-white">
+                <div class="columns is-vcentered">
+                    <div class="column person-description is-half">
+                        <p class="subtitle is-cenetered">
+                            The qualities that best describe Will are: analytical, purposeful, and curious.
+                            He is a military veteran currently serving in the Michigan Air National Guard, and he works at Delta Dental of Michigan. In his careers, he serves as the Equal Opportunity director at his military unit and as an Senior Application Security Engineer for his civilian employer.
+                            One of main interests is learning about the impact of technology on culture and vice versa. This was one of concentrations of his master's degree in network security.
+                            In his spare time, he enjoys traveling abroad, dancing (ballroom and Latin dancing), and giving back to his local community.
+                            He is currently working towards becoming a full stack developer. The following quote is something that has inspired him on this journey.
+                            “Design is really an act of communication, which means having a deep understanding of the person with whom the designer is communicating.”
+                            ― Donald A. Norman, The Design of Everyday Things       
+                        </p>
+                    </div>
+                    <div class="column pl-6">
+                        <img class="placeholder" src="./assets/images/Will.jpg" height="500" width="350" alt="">
+                    </div>
+                </div> 
+            </div>
+        </div>
+      </section> 
+        <section id="personalizeSec">
+            <div class="tile notification $grey-light p-2 mr-3 mb-3 ml-3 is-flex-wrap-nowrap" id="pMiddle">
+                <div class="columns is-vcentered m-0">
+                    <div class="column is-two-thirds">
+                        <!-- <ul id ="favorites"></ul> -->
+                        <div class="tile is-parent p-1 is-align-items-center level-item">
+
+                            <div class="tile is-child is-vertical p-0 m-1" style="max-width:200px;">
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox0">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox1">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+                            </div>
+                
+                            <div class="tile is-child is-vertical p-0 m-1" style="max-width:200px;">
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox2">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox3">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+                            </div>
+                
+                            <div class="tile is-child is-vertical p-0 m-1" style="max-width:200px;">
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox4">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox5">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+                            </div>
+                
+                            <div class="tile is-child is-vertical p-0 m-1" style="max-width:200px;">
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox6">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+
+                                <div class="box is-align-items-center level-item is-clickable" id="pbox7">
+                                    <img src="./assets/images/add_favorites.jpg">
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="column">
+                        <div class="container"><img src="./assets/images/primaryFavorite.jpg" style="max-width:325px;"  id="personalMainImg"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="title m-0 has-text-centered" id="homeMiddle">
+                <div class="columns is-vcentered m-0"> 
+                    <div class="column m-0">
+                        <p class="is-size-6"></p>
+                    </div>
+                    <div class="column m-0">
+                        <p class="is-size-6">Saved favorites</p>
+                    </div>
+                    <div class="column m-0">
+                        <p class="is-size-6"></p>
+                    </div>
+                </div>
+            </div>  -->
+        </section>
+
+        <section id="top20Sec">
+            <!-- <div class="container">
+              
+            </div> -->
+          <div class="box mt-3 mr-3 ml-3 mb-0 has-background-info">
+            <div class="columns p-0 m-0">
+              <div class="column" id="kelsieFavs">
+                <div class="dropdown"  id="kelsieDropDown" >
+                  <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <span>See Kelsie's Top 5 Movies</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item" id="kelsie1">
+                        Uptown Girls
+                      </a>
+                      <a class="dropdown-item" id="kelsie2">
+                        Ella Enchanted
+                      </a>
+                      <a class="dropdown-item" id="kelsie3">
+                        New York Minute
+                      </a>
+                      <a class="dropdown-item" id="kelsie4">
+                        The Lorax
+                      </a>
+                      <a class="dropdown-item" id="kelsie5">
+                        The Social Network
+                      </a>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+              <div class="column" id="laurenFavs">
+                <div class="dropdown" id="laurenDropDown">
+                  <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <span>See Lauren's Top 5 Movies</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item" id="lauren1">
+                        Spirited Away
+                      </a>
+                      <a class="dropdown-item" id="lauren2">
+                        My Neighbor Totoro
+                      </a>
+                      <a class="dropdown-item" id="lauren3">
+                        Your name
+                      </a>
+                      <a class="dropdown-item" id="lauren4">
+                        Sinister
+                      </a>
+                      <a class="dropdown-item" id="lauren5">
+                        As Above So Below
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column" id="drewFavs">
+                <div class="dropdown" id="drewDropDown">
+                  <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <span>See Andrew's Top 5 Movies</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item" id="drew1">
+                        Hitch
+                      </a>
+                      <a class="dropdown-item" id="drew2">
+                        The Secret Life of Walter Mitty
+                      </a>
+                      <a class="dropdown-item" id="drew3">
+                        The Green Mile
+                      </a>
+                      <a class="dropdown-item" id="drew4">
+                        Treasure Planet
+                      </a>
+                      <a class="dropdown-item" id="drew5">
+                        Guardians fo the Galaxy Vol. 2
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column" id="willFavs">
+                <div class="dropdown" id="willDropDown">
+                  <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <span>See Will's Top 5 Movies</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item" id="will1">
+                        Back to the Future II
+                      </a>
+                      <a class="dropdown-item" id="will2">
+                        Terminator II
+                      </a>
+                      <a class="dropdown-item" id="will3">
+                        Forest Gump
+                      </a>
+                      <a class="dropdown-item" id="will4">
+                        Memento
+                      </a>
+                      <a class="dropdown-item" id="will5">
+                        Black Panther            
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="title notification $grey-light mt-3 ml-3 mr-3 mb-3" id="favMiddle"> -->
+          
+            <div class="container-poster notification $grey-light p-1 m-3" id="favMiddleMovies">
+                <div class="tile is-justify-content-center">
+                    <div class="columns is-vcentered">
+                        <div class="column poster" id="posterColumn"> 
+                            <img class = "display-poster" id="poster6" src="./assets/images/enchanted_ella.jpg" alt="Enchanted Ella" data-open="modal1">
+                            <img class = "display-poster" id="poster7" src="./assets/images/my_neighbor_totoro.jpg" alt="My Neighbor Totoro" data-open="modal1">
+                            <img class = "display-poster" id="poster8" src="./assets/images/the_secret_life_of_walter_mitty.jpg" alt="The Secret Life of Walter Mitty" data-open="modal1">
+                            <img class = "display-poster" id="poster9" src="./assets/images/terminator_2_judgement_day.jpg" alt="Terminator 2 Judgement Day" data-open="modal1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <!-- </div> -->
+                    
+              
+
+          <!-- <div class="notification $grey-light"  id="displayFav">
+            <div class="columns is-mobile is-centered">
+              <div class="column"> 
+                <div class="column poster">
+                  <div class="tile is-justify-content-center">
+                    <h2 id="favorite-title"></h2>  
+                  </div>
+                  <div class="tile is-justify-content-center">
+                    <div id="favorite-poster"></div>
+                  </div>
+                  <div class="tile has-text-centered">
+                    <h3 id="favorite-data"></h3>
+                  </div>
+                  <div class="tile is-justify-content-center">
+                    <button id="favBack">Back to lists</button>
+                  </div>
+                </div>  
+              </div>
+            </div>
+          </div> -->
+           
+        </section>
+
+        <section id="triviaSec">
+
+          <div class="tile mt-3 mr-3 ml-3 mb-0 notification has-background-info is-justify-content-center" id="gamesMiddle">
+            <div class="dropdown" id="gamesDropDown">
+              <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                  <span>Select a game</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a class="dropdown-item" id="selectTrivia">
+                    Trivia
+                  </a>
+                  <a class="dropdown-item" id="selectMatching">
+                    Matching
+                  </a>
+                  <a class="dropdown-item" id="selectGuessing">
+                    Guessing
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container mt-3 mr-3 ml-3 mb-0 notification has-background-info" id="gameStatus">
+               <span class="tile is-justify-content-center is has-text-centered has-text-white has-text-weight-semibold mb-2" id="timer">Time: 0</span> 
+              <progress class="progress" value="10" max="100" id="progressBar"></progress>
+          </div>
+
+         <div class="container-poster notification $grey-light p-1 m-3" id="gamesMiddleMovies">
+          <div class="tile is-justify-content-center">
+              <div class="columns is-vcentered">
+                  <div class="column poster" id="posterColumn"> 
+                      <img class = "display-poster" id="poster10" src="./assets/images/new_york_minute.jpg" alt="New York Minute" data-open="modal1">
+                      <img class = "display-poster" id="poster11" src="./assets/images/your_name.jpg" alt="Your Name" data-open="modal1">
+                      <img class = "display-poster" id="poster12" src="./assets/images/the_green_mile.jpg" alt="The Green Mile" data-open="modal1">
+                      <img class = "display-poster" id="poster13" src="./assets/images/forrest_gump.jpg" alt="Forrest Gump" data-open="modal1">
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="container-poster notification $grey-light p-1 m-3" style="display:none" id="guessingGame">
+          <div class="tile is-justify-content-center is-flex-direction-column ">
+                    <div class="title has-text-centered">
+                      <p class="is-size-1">What movie is this scene from?</p>
+                    </div>
+                    <div class="title level-item">
+                        <img src="./assets/images/backdrops/inceptionBackdrop.jpg" id="guessingImage">
+                    </div>        
+                    <div class="tile level-item has-background-black p-1">
+                      <p class="is-size-2 has-text-white" id="matchTitle">_________</p>
+                    </div>
+                
+            </div>
+        </div>
+
+        <div class="container level-item p-1 m-2" style="display:none" id="matchingGame">
+          <div class="tile is-ancestor p-1 m-6 is-align-items-center level-item">
+
+              <div class="tile is-parent is-vertical p-0" style="max-width:200px;">
+                      <button class="container is-align-items-center level-item" id="matchBtn0"></button>
+                      <button class="container is-align-items-center level-item" id="matchBtn1"></button>
+                  
+                  </div>
+      
+                  <div class="tile is-parent is-vertical p-0" style="max-width:200px;">
+                      <button class="container is-align-items-center level-item" id="matchBtn2"></button>
+                      <button class="container is-align-items-center level-item" id="matchBtn3"></button>
+      
+                  </div>
+      
+                  <div class="tile is-parent is-vertical p-0" style="max-width:200px;">
+                      <button class="container is-align-items-center level-item" id="matchBtn4"></button>
+                      <button class="container is-align-items-center level-item" id="matchBtn5"></button>
+          
+                  </div>
+      
+                  <div class="tile is-parent is-vertical p-0" style="max-width:200px;">
+                      <button class="container is-align-items-center level-item" id="matchBtn6"></button>
+                      <button class="container is-align-items-center level-item" id="matchBtn7"></button>
+      
+                  </div>
+      
+                  <div class="tile is-parent is-vertical p-0" style="max-width:200px;">
+                      <button class="container is-align-items-center level-item" id="matchBtn8"></button>
+                      <button class="container is-align-items-center level-item" id="matchBtn9"></button>
+      
+                  </div>
+              
+          </div>
+        </div>
+
+        <div class="container" style="display:none" id="quizPage">
+            <!-- <div class="box mt-6"> -->
+              <div class="notification is-info m-3">
+                <div class="title is-flex-direction-column is-justify-content-center" id="triviaColumns">
+                        <h2 class="subtitle is-3 mt-4 has-text-centered" id="questionList"></h2>
+
+                        <div id="answerBox">
+                            <div id="imgList">
+                              <a class="container level-item m-1" href="javascript:nextImage('mainImg')"><img src=""style="" id="movieImageOne" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="container level-item">
+                          <button class="button is-outlined m-1" id="A"></button>
+                          <button class="button is-outlined m-1" id="B"></button>
+                          <button class="button is-outlined m-1" id="C"></button>
+                          <button class="button is-outlined m-1" id="D"></button>
+                        </div>
+                        <div class="has-text-centered is-size-6" id="rightwrong"></div>
+                    </div>
+                  </div>
+                </div>       
+          <!-- </div> -->
+        </div>
+
+        <div class="modal" id="modal3">
+          <div class="modal-card">  
+            <header class="modal-card-head">
+                <button class="modal-close" aria-label="close modal" data-close></button>
+                <p class="modal-card-title is-size-2">Game Instructions</p>
+                <br>
+            </header>
+            <section class="modal-card-body">
+                  <div id="gameName"></div>
+                    <div id="gameInstructions"></div>
+            </section>
+            <footer class="modal-footer">
+                <button class="button" aria-label="close modal" id="startGames" data-close>Start Game</button>
+            </footer>
+          </div>
+      </div>
+
+      <div class="modal" id="modal4">
+        <div class="modal-card">  
+          <header class="modal-card-head">
+              <button class="modal-close" aria-label="close modal" data-close></button>
+              <p class="modal-card-title is-size-2" id="gameOver">Game Complete or Over</p>
+              <br>
+          </header>
+          <section class="modal-card-body">
+                <div id="gameName"></div>
+                  <div><p id="overallProgress">You got 3 out of the 4 answers correct!</p></div>
+          </section>
+          <footer class="modal-footer">
+            <div class="columns">
+              <!-- <div class="column"> -->
+                <!-- <button class="button" aria-label="close modal" id="tryAgain" data-close>Try Again</button> -->
+              <!-- </div> -->
+              <div class="column">
+                <button class="button" aria-label="close modal" id="returnGames" data-close>Return To Games Page</button>
+              </div>
+            </div>
+          </footer>
+        </div>
+    </div>
+
+        <div class="container" style="display: none;" id="endGame">
+          <div class="box mt-6">
+              <div class="notification is-info">
+                  <div id="finalscore">
+                  </div>
+                      <h2 class="subtitle is-3 mt-4" id="scorepage">
+                      You finished the quiz!
+                      </h2>
+                  <div class="scores" id="score">
+                      <h2 class="subtitle is-3" id="yourScore"></h2>
+                  </div>
+                  <div class="buttons mt-6">
+                      <button class="button restartQuiz" id="restartQuiz">Restart</button>
+                      <button class="button endGameQuiz" id="endQuiz">End Game</button>
+                  </div>
+              </div>
+          </div>
+       </div>
+    
+
+        <div class="container-poster notification $grey-light p-1 m-3" style="display:none" id="triviaGame">
+          <div class="tile is-justify-content-center">
+              <div class="columns is-vcentered">
+                  <div class="column poster" id="posterColumn"> 
+                      <img class = "display-poster" id="poster6" src="./assets/images/enchanted_ella.jpg" alt="Enchanted Ella" data-open="modal1">
+                      <img class = "display-poster" id="poster7" src="./assets/images/my_neighbor_totoro.jpg" alt="My Neighbor Totoro" data-open="modal1">
+                      <img class = "display-poster" id="poster8" src="./assets/images/the_secret_life_of_walter_mitty.jpg" alt="The Secret Life of Walter Mitty" data-open="modal1">
+                      <img class = "display-poster" id="poster9" src="./assets/images/terminator_2_judgement_day.jpg" alt="Terminator 2 Judgement Day" data-open="modal1">
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+<footer class="has-background-info has-text-white has-text-centered">
+    <p>The source code is licensed by the team at KLAW Movies Apps.  You can learn more about this project and others at our github page.</p>      
+</footer>
+</html>
